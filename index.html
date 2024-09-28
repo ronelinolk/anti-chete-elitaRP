@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AntiChete</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        textarea {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AntiChete</h1>
+        <textarea id="message" placeholder="Enter your message here..."></textarea><br>
+        <button id="sendButton">Send</button>
+    </div>
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            const message = document.getElementById('message').value;
+            if (message.trim() === '') {
+                alert('Please enter a message.');
+                return;
+            }
+
+            const webhookUrl = 'https://discord.com/api/webhooks/1289634148700524616/9Lhsvl9yQJmWpEExPF-yINciwWBkow4wZMyLMvct9gwvRWPLQNEdca_6Z17MkZVQn4q0'; // Замість цього вставте URL вашого вебхука
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: message
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Message sent successfully!');
+                    document.getElementById('message').value = '';
+                } else {
+                    alert('Failed to send message.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to send message.');
+            });
+        });
+    </script>
+</body>
+</html>
